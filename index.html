@@ -187,10 +187,13 @@
            return data.rates
         })
         .catch((error) => {
-            alert('Something went wrong kindly refresh the page!')
+            
+                               
+                               
+                               ('Something went wrong kindly refresh the page!')
         })
 
-    const nairaExchangeRate =  fetch('http://api.exchangeratesapi.io/v1/latest?access_key=17b0b2b402b3463dff95e223c7ab6607')
+<!--     const nairaExchangeRate =  fetch('http://api.exchangeratesapi.io/v1/latest?access_key=17b0b2b402b3463dff95e223c7ab6607')
         .then((response)=> {
             return response.json()
         })
@@ -199,7 +202,7 @@
         })
         .catch((error) => {
             alert('Something went wrong kindly refresh the page!')
-        })
+        }) -->
 
    const getCurrentRate = async (currencyCode) => {
 
