@@ -179,44 +179,6 @@
 <script>
 
 
-    const exchangerates =  fetch('http://api.exchangeratesapi.io/v1/latest?access_key=17b0b2b402b3463dff95e223c7ab6607')
-        .then((response)=> {
-            return response.json()
-        })
-        .then((data)=>{
-           return data.rates
-        })
-        .catch((error) => {
-            alert('Something went wrong kindly refresh the page!')
-        })
-
-    const nairaExchangeRate =  fetch('http://api.exchangeratesapi.io/v1/latest?access_key=17b0b2b402b3463dff95e223c7ab6607')
-        .then((response)=> {
-            return response.json()
-        })
-        .then((data)=>{
-           return data.rates.NGN
-        })
-        .catch((error) => {
-            alert('Something went wrong kindly refresh the page!')
-        })
-
-   const getCurrentRate = async (currencyCode) => {
-
-        const rates = await exchangerates
-
-        if(currencyCode === 'USD'){
-            console.log(rates.USD)
-        }else if(currencyCode === 'GBP'){
-            console.log(rates.GBP)
-        }else if(currencyCode === 'EUR'){
-            console.log(rates.EUR)
-        }else {
-            console.log(rates.NGN)
-        }
-   }
-
-   getCurrentRate('NGN')
 
     const calculateTotal = (cpu, ram , storage, rate) => {
         const total       = (cpu * 3.75 * 1.2 * rate ) + (ram * 8.17 * 1.2 * rate) + (storage * 0.05 * 1.2 * rate)
