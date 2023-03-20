@@ -226,15 +226,16 @@
         const endpoint = 'https://api.flutterwave.com/v3/transfers/rates';
         const url      = `https://api.flutterwave.com/v3/transfers/rates?amount=1000&destination_currency=USD&source_currency=NGN`;
         const token    = 'FLWSECK_TEST-7fbb05540009c01e9efb29fd64a88b5f-X';
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
         try {
-            let response =  await fetch(url, {
-                method:'get',
+            let response =  await fetch(proxyUrl +  url, {
+                method:'GET',
                 headers:{
-                    Authorization : `Bearer ${token}`
+                    'Authorization' : `Bearer ${token}`,
+                    'Content-Type': 'application/json',
                 },
-                mode:'cors',
-                cache:'default'
+                mode: 'cors'
             })
             let data = await response.json();
             return console.log(data);
@@ -247,7 +248,6 @@
 
     const testingPoint =  async () => {
         const url      = `https://jsonplaceholder.typicode.com/posts/1`;
-        
         try {
             let response =  await fetch(url, {
                 method:'get',
