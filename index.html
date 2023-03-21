@@ -265,10 +265,10 @@
                     const inputTarget = document.querySelector('#demo1')
                     inputTarget.textContent = vals
                     const getNaira = async () => {
-                        const inputValue  = inputTarget.textContent
+                        const cpu        = inputTarget.textContent
                         const ram         = document.querySelector('#demo2').textContent
                         const storage     = document.querySelector('#demo3').textContent
-                        await calculateTotal(inputValue,ram,storage);
+                        await calculateTotal(cpu,ram,storage);
                     }
                     getNaira()
                    
@@ -287,9 +287,8 @@
                     const getNaira = async () => {
                         const inputValue  = secondTarget.textContent
                         const cpu         = document.querySelector('#demo1').textContent;
-                        const ram        = document.querySelector('#demo2').textContent
-                        const storage     = document.querySelector('#demo3').textContent
-                        await calculateTotal(inputValue,ram,storage);
+                        const storage     = document.querySelector('#demo3').textContent;
+                        await calculateTotal(cpu,inputValue,storage);
                     }
                     getNaira()
                 }
@@ -306,10 +305,9 @@
                     thirdTarget.textContent = vals
                     const getNaira = async () => {
                        const inputValue  = thirdTarget.textContent
-                        const cpu        = document.querySelector('#demo1').textContent
-                        const ram        = document.querySelector('#demo2').textContent
-                        const storage     = document.querySelector('#demo3').textContent
-                        await calculateTotal(inputValue,ram,storage);
+                        const cpu        = document.querySelector('#demo1').textContent;
+                        const ram        = document.querySelector('#demo2').textContent;
+                        await calculateTotal(cpu,ram,inputValue);
                     }
                     getNaira()
                 }
