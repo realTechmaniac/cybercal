@@ -167,11 +167,11 @@
                         <div">
                             <div class="input-group mb-3 mt-3 ">
                                 <div class="input-group-prepend">
-                                    <select class="form-select" aria-label="Default select example" id="currencyhold">
+                                    <select class="form-select" aria-label="Default select example" id="currencyInput">
                                         <option value="NGN">currency(&#x20A6;)</option>
                                         <option value="USD">currency(&#36;)</option>
                                       </select>
-                                    <div class="dropdown-menu" id="currencyInput">
+                                    <div class="dropdown-menu">
                                         <a class="dropdown-item" value="USD"  >USD</a>
                                         <div role="separator" class="dropdown-divider"></div>
                                         <a class="dropdown-item"  value="GBP" ">GBP</a>
@@ -347,10 +347,10 @@
             const rate = await fetchExchangeValue(1, 'NGN', 'USD');
             let totalInput     = document.querySelector('#total').value
                 if(selectedCurrency === 'USD'){
-                    totalInput = totalInpu /rate
+                    totalInput = totalInput /rate
                     document.querySelector('#total').value = totalInput.toFixed(2) 
                 }else if(selectedCurrency === 'NGN'){
-                    totalInput = totalInput * 1;
+                    totalInput = totalInput * rate;
                     document.querySelector('#total').value = totalInput.toFixed(2)
                 }
         }
