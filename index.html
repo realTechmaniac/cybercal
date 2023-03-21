@@ -231,7 +231,7 @@
         const addUrl   = 'https://proxy.cors.sh/';
 
         try {
-            let response =  await fetch(addUrl +  url, {
+            let response =  await fetch(proxyUrl +  url, {
                 method:'GET',
                 headers:{
                     'Authorization' : `Bearer ${token}`,
