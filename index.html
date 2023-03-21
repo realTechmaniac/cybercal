@@ -97,6 +97,18 @@
             align-items: center;
         }
 
+        @media (max-width: 767px) {
+            .lower-box{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+           }
+        }
+        .rs-container .rs-scale {
+            white-space: nowrap !important;
+        }
+
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/rSlider.min.css">
@@ -200,7 +212,13 @@
         const rate = await fetchExchangeValue(1, 'NGN', 'USD');
         const total       = (cpu * 3.75 * 1.2 * rate ) + (ram * 8.17 * 1.2 * rate) + (storage * 0.05 * 1.2 * rate)
         const totalHolder = document.querySelector('#total');
-        totalHolder.value =  total.toFixed(2)
+        const currentCurrency = document.getElementById('currencyInput').value;
+        if(currentCurrency  == 'NGN'){
+            totalHolder.value =  total.toFixed(2)
+        }else{
+            totalHolder.value = (total/rate).toFixed(2)
+        }
+       
     }
 
     const changeCurrency = (currency, totalValue) => {
@@ -208,17 +226,11 @@
         let convertedValue;
 
         if(currency  === 'USD'){
-
             convertedValue = totalValue/500
-
         }else if(currency  === 'GBP'){
-
             convertedValue = totalValue/562
-
         }else{
-
             convertedValue = totalValue * 500
-
         }
 
         return convertedValue
@@ -231,6 +243,7 @@
         const url      = `https://api.flutterwave.com/v3/transfers/rates?amount=${amount}&destination_currency=${destination}&source_currency=${source}`;
         const token    = 'FLWSECK-c7fc0bb8ec084dc3a13a319f06a7226b-X';
         const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const addUrl   = 'https://proxy.cors.sh/';
 
         try {
             let response =  await fetch(proxyUrl +  url, {
@@ -250,27 +263,6 @@
 
 
 
-
-  
-
-    const testingPoint =  async () => {
-        const url      = `https://jsonplaceholder.typicode.com/posts/1`;
-        try {
-            let response =  await fetch(url, {
-                method:'get',
-                mode:'cors',
-                cache:'default'
-            })
-            let data = await response.json();
-            return console.log(data);
-        } catch (error) {
-            console.log(error)
-        }               
-    }
-
-
-    testingPoint();
-
     (function () {
         'use strict';
 
@@ -288,10 +280,10 @@
                     const inputTarget = document.querySelector('#demo1')
                     inputTarget.textContent = vals
                     const getNaira = async () => {
-                        const inputValue  = inputTarget.textContent
+                        const cpu        = inputTarget.textContent
                         const ram         = document.querySelector('#demo2').textContent
                         const storage     = document.querySelector('#demo3').textContent
-                        await calculateTotal(inputValue,ram,storage);
+                        await calculateTotal(cpu,ram,storage);
                     }
                     getNaira()
                    
@@ -310,9 +302,8 @@
                     const getNaira = async () => {
                         const inputValue  = secondTarget.textContent
                         const cpu         = document.querySelector('#demo1').textContent;
-                        const ram        = document.querySelector('#demo2').textContent
-                        const storage     = document.querySelector('#demo3').textContent
-                        await calculateTotal(inputValue,ram,storage);
+                        const storage     = document.querySelector('#demo3').textContent;
+                        await calculateTotal(cpu,inputValue,storage);
                     }
                     getNaira()
                 }
@@ -329,10 +320,9 @@
                     thirdTarget.textContent = vals
                     const getNaira = async () => {
                        const inputValue  = thirdTarget.textContent
-                        const cpu        = document.querySelector('#demo1').textContent
-                        const ram        = document.querySelector('#demo2').textContent
-                        const storage     = document.querySelector('#demo3').textContent
-                        await calculateTotal(inputValue,ram,storage);
+                        const cpu        = document.querySelector('#demo1').textContent;
+                        const ram        = document.querySelector('#demo2').textContent;
+                        await calculateTotal(cpu,ram,inputValue);
                     }
                     getNaira()
                 }
@@ -365,31 +355,17 @@
 
 
 
-    const getCurrentNairaRate = () => {
-        const ACCESS_KEY = '17b0b2b402b3463dff95e223c7ab6607';
-        fetch(`http://api.exchangeratesapi.io/v1/latest?access_key=${ACCESS_KEY}`)
-        .then(response => response.json())
-        .then(data => {
-            const exchangeRate = data.rates?.NGN;
-            return exchangeRate;
-        })
-        .catch(error => console.error('An error occurred while fetching the exchange rate:', error));
-    }
+    // document.querySelector('#currencyhold').addEventListener('change', (e) => {
 
-   console.log(getCurrentNairaRate());
+    //     const totalValue  =  document.querySelector('#total').value
 
+    //     const newTotal    =  changeCurrency(e.target.value, totalValue)
 
-    document.querySelector('#currencyhold').addEventListener('change', (e) => {
+    //     const totalHolder = document.querySelector('#total');
 
-        const totalValue  =  document.querySelector('#total').value
+    //     totalHolder.value =  newTotal;
 
-        const newTotal    =  changeCurrency(e.target.value, totalValue)
-
-        const totalHolder = document.querySelector('#total');
-
-        totalHolder.value =  newTotal;
-
-    })
+    // })
 
     // document.querySelector('#usd').addEventListener('click', (e) => {
 
