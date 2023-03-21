@@ -251,23 +251,6 @@
 
   
 
-    const testingPoint =  async () => {
-        const url      = `https://jsonplaceholder.typicode.com/posts/1`;
-        try {
-            let response =  await fetch(url, {
-                method:'get',
-                mode:'cors',
-                cache:'default'
-            })
-            let data = await response.json();
-            return console.log(data);
-        } catch (error) {
-            console.log(error)
-        }               
-    }
-
-
-    testingPoint();
 
     (function () {
         'use strict';
