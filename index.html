@@ -193,10 +193,11 @@
 
 
 
-    const calculateTotal = (cpu, ram , storage, rate) => {
+    const calculateTotal = async (cpu, ram , storage) => {
+        const rate = await fetchExchangeValue(1, 'NGN', 'USD');
         const total       = (cpu * 3.75 * 1.2 * rate ) + (ram * 8.17 * 1.2 * rate) + (storage * 0.05 * 1.2 * rate)
         const totalHolder = document.querySelector('#total');
-        totalHolder.value =  total.toFixed()
+        totalHolder.value =  total.toFixed(2)
     }
 
     const changeCurrency = (currency, totalValue) => {
@@ -224,8 +225,8 @@
 
     const fetchExchangeValue =  async (amount, source , destination) => {
         const endpoint = 'https://api.flutterwave.com/v3/transfers/rates';
-        const url      = `https://api.flutterwave.com/v3/transfers/rates?amount=1000&destination_currency=USD&source_currency=NGN`;
-        const token    = 'FLWSECK_TEST-7fbb05540009c01e9efb29fd64a88b5f-X';
+        const url      = `https://api.flutterwave.com/v3/transfers/rates?amount=${amount}&destination_currency=${destination}&source_currency=${source}`;
+        const token    = 'FLWSECK-c7fc0bb8ec084dc3a13a319f06a7226b-X';
         const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
         try {
@@ -238,13 +239,16 @@
                 mode: 'cors'
             })
             let data = await response.json();
-            return console.log(data);
+            return data.data.source.amount;
         } catch (error) {
             console.log(error)
         }               
     }
 
-    fetchExchangeValue(100000, 'NGN', 'USD');
+
+
+
+  
 
     const testingPoint =  async () => {
         const url      = `https://jsonplaceholder.typicode.com/posts/1`;
@@ -280,12 +284,11 @@
                 onChange: function (vals) {
                     const inputTarget = document.querySelector('#demo1')
                     inputTarget.textContent = vals
-                    const inputValue  = inputTarget.textContent
-                    const ram         = document.querySelector('#demo2').textContent
-                    const storage     = document.querySelector('#demo3').textContent
-                    const getNaira = () => {
-                        const rate      = 500
-                        calculateTotal(inputValue,ram,storage,rate);
+                    const getNaira = async () => {
+                        const inputValue  = inputTarget.textContent
+                        const ram         = document.querySelector('#demo2').textContent
+                        const storage     = document.querySelector('#demo3').textContent
+                        await calculateTotal(inputValue,ram,storage);
                     }
                     getNaira()
                    
@@ -301,12 +304,12 @@
                 onChange: function (vals) {
                     const secondTarget = document.querySelector('#demo2')
                     secondTarget.textContent = vals
-                    const inputValue  = secondTarget.textContent
-                    const cpu         = document.querySelector('#demo1').textContent
-                    const storage     = document.querySelector('#demo3').textContent
-                    const getNaira = () => {
-                        const rate      = 500
-                        calculateTotal(cpu,inputValue,storage,rate);
+                    const getNaira = async () => {
+                        const inputValue  = secondTarget.textContent
+                        const cpu         = document.querySelector('#demo1').textContent;
+                        const ram        = document.querySelector('#demo2').textContent
+                        const storage     = document.querySelector('#demo3').textContent
+                        await calculateTotal(inputValue,ram,storage);
                     }
                     getNaira()
                 }
@@ -321,12 +324,12 @@
                 onChange: function (vals) {
                     const thirdTarget = document.querySelector('#demo3')
                     thirdTarget.textContent = vals
-                    const inputValue  = thirdTarget.textContent
-                    const cpu         = document.querySelector('#demo1').textContent
-                    const ram         = document.querySelector('#demo2').textContent
-                    const getNaira = () => {
-                        const rate      = 500
-                        calculateTotal(cpu,ram,inputValue,rate);
+                    const getNaira = async () => {
+                       const inputValue  = thirdTarget.textContent
+                        const cpu        = document.querySelector('#demo1').textContent
+                        const ram        = document.querySelector('#demo2').textContent
+                        const storage     = document.querySelector('#demo3').textContent
+                        await calculateTotal(inputValue,ram,storage);
                     }
                     getNaira()
                 }
@@ -338,32 +341,21 @@
     const currencyInput = document.querySelector('#currencyInput')
     currencyInput.addEventListener('change', (e) => {
         let totalInput         = document.querySelector('#total').value
-        const selectedCurrency  = e.target.value
-        const exchangerates =  fetch('https://api.exchangeratesapi.io/v1/latest?access_key=17b0b2b402b3463dff95e223c7ab6607')
-            .then((response)=> {
-                return response.json()
-            })
-            .then((data)=>{
-            return data.rates
-            })
-            .catch((error) => {
-                alert('Something went wrong kindly refresh the page!')
-            })
+        const selectedCurrency  = e.target.value 
 
-        const getRates = () => {
-            exchangerates.then((rate) => {
-                let totalInput     = document.querySelector('#total').value
+        const getRates = async () => {
+            const rate = await fetchExchangeValue(1, 'NGN', 'USD');
+            let totalInput     = document.querySelector('#total').value
                 if(selectedCurrency === 'USD'){
-                    totalInput = totalInput * (1 / rate.NGN )
+                    totalInput = totalInpu /rate
                     document.querySelector('#total').value = totalInput.toFixed(2) 
                 }else if(selectedCurrency === 'NGN'){
-                    totalInput = totalInput * rate.NGN 
+                    totalInput = totalInput * 1;
                     document.querySelector('#total').value = totalInput.toFixed(2)
                 }
-            })  
         }
 
-        getRates()
+        getRates();
 
         
     })
@@ -392,7 +384,7 @@
 
         const totalHolder = document.querySelector('#total');
 
-        totalHolder.value =  newTotal.toFixed()
+        totalHolder.value =  newTotal;
 
     })
 
