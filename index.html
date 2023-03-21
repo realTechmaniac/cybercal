@@ -228,9 +228,10 @@
         const url      = `https://api.flutterwave.com/v3/transfers/rates?amount=${amount}&destination_currency=${destination}&source_currency=${source}`;
         const token    = 'FLWSECK-c7fc0bb8ec084dc3a13a319f06a7226b-X';
         const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const addUrl   = 'https://proxy.cors.sh/';
 
         try {
-            let response =  await fetch(proxyUrl +  url, {
+            let response =  await fetch(addUrl +  url, {
                 method:'GET',
                 headers:{
                     'Authorization' : `Bearer ${token}`,
