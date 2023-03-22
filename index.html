@@ -209,7 +209,8 @@
 
 
     const calculateTotal = async (cpu, ram , storage) => {
-        const rate = await fetchExchangeValue(1, 'NGN', 'USD');
+        const exchangerate =  await fetchExchangeValue(1, 'NGN', 'USD');
+        const rate  = exchangerate ? exchangerate : 792;
         const total       = (cpu * 3.75 * 1.2 * rate ) + (ram * 8.17 * 1.2 * rate) + (storage * 0.05 * 1.2 * rate)
         const totalHolder = document.querySelector('#total');
         const currentCurrency = document.getElementById('currencyInput').value;
@@ -337,7 +338,8 @@
         const selectedCurrency  = e.target.value 
 
         const getRates = async () => {
-            const rate = await fetchExchangeValue(1, 'NGN', 'USD');
+            const exchangerate = await fetchExchangeValue(1, 'NGN', 'USD');
+            const rate  = exchangerate ? exchangerate : 792;
             let totalInput     = document.querySelector('#total').value
                 if(selectedCurrency === 'USD'){
                     totalInput = totalInput /rate
