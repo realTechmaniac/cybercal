@@ -109,6 +109,14 @@
             white-space: nowrap !important;
         }
 
+        .custom-fin{
+            width: 80px;
+            margin-bottom: 15px;
+            border-color:  grey;
+            border-width: 0.6px;
+            text-align: center;
+        }
+
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/rSlider.min.css">
@@ -125,12 +133,13 @@
                         <div class="number-box">
                             <p>CPU</p>
                             <p class="font-weight-bold number-item" id="demo1"></p>
+                            <input type = "text" value = "" class="custom-fin" id = "input1"/>
                         </div>
                   </div>
                 </div>
                 <div class="mt-3">
                     <div class="slider-container">
-                        <input type="text" id="slider2" class="slider" />
+                        <input type="text" id="slider2" class="slider"  />
                     </div>
                 </div>
               
@@ -143,6 +152,7 @@
                         <div class="number-box">
                             <p>RAM</p>
                             <p class="font-weight-bold number-item" id="demo2"></p>
+                            <input type = "text" value="" class="custom-fin" id = "input2"/>
                         </div>
                     </div>
                 </div>
@@ -160,6 +170,7 @@
                         <div class="number-box">
                             <p> STORAGE(TB)</p> 
                             <p class="font-weight-bold number-item" id="demo3"></p>
+                            <input type = "text" value=""  id = "input3"class="custom-fin"/>
                         </div>
                     </div>
                 </div>
@@ -269,13 +280,15 @@
 
             var slider2 = new rSlider({
                 target: '#slider2',
-                values: [0,10,20,'30'],
+                values:{min: 0, max: 20},
                 range: false,
-                set: [5],
+                step:2 ,
+                set: [2],
                 tooltip: false,
                 onChange: function (vals) {
                     const inputTarget = document.querySelector('#demo1')
-                    inputTarget.textContent = vals
+                    inputTarget.textContent = vals;
+                    document.querySelector('#input1').value = vals;
                     const getNaira = async () => {
                         const cpu        = inputTarget.textContent
                         const ram         = document.querySelector('#demo2').textContent
@@ -289,12 +302,14 @@
 
             var slider3 = new rSlider({
                 target: '#slider3',
-                values: [0, 50, 100, 150],
+                values: {min: 0, max: 64},
+                step:4,
                 range: false,
                 set: [5],
                 tooltip: false,
                 onChange: function (vals) {
-                    const secondTarget = document.querySelector('#demo2')
+                    const secondTarget = document.querySelector('#demo2');
+                    document.querySelector('#input2').value = vals;
                     secondTarget.textContent = vals
                     const getNaira = async () => {
                         const inputValue  = secondTarget.textContent
@@ -308,12 +323,14 @@
 
             var slider = new rSlider({
                 target: '#slider4',
-                values: [250,500,1,4],
+                values:  {min: 0, max: 1000},
                 range: false,
+                step:250,
                 set: [5],
                 tooltip: false,
                 onChange: function (vals) {
-                    const thirdTarget = document.querySelector('#demo3')
+                    const thirdTarget = document.querySelector('#demo3');
+                    document.querySelector('#input3').value = vals;
                     thirdTarget.textContent = vals
                     const getNaira = async () => {
                        const inputValue  = thirdTarget.textContent
@@ -352,27 +369,14 @@
 
 
 
-    // document.querySelector('#currencyhold').addEventListener('change', (e) => {
+  //SET range with input changes::
 
-    //     const totalValue  =  document.querySelector('#total').value
-
-    //     const newTotal    =  changeCurrency(e.target.value, totalValue)
-
-    //     const totalHolder = document.querySelector('#total');
-
-    //     totalHolder.value =  newTotal;
-
-    // })
-
-    // document.querySelector('#usd').addEventListener('click', (e) => {
-
-    //     console.log('htit')
-    //     // const totalValue  =  document.querySelector('#total').value
-
-    //     // console.log(e.target.value, 'here')
-
-    //     // const newTotal    =  changeCurrency(e.target.value, totalValue)
-    // } )
+  document.querySelector('#input1').addEventListener('change', (e) => {
+    const target = document.querySelector('.slider-container');
+    let closest  = target.querySelector('.rs-selected');
+    let pointer  = target.querySelector('.rs-pointer');
+    slider2.setValues(e.target.value);
+  })
    
 </script>
 <script type="text/javascript" src="js/jquery-3.3.1.slim.min.js"></script>
