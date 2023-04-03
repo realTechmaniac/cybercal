@@ -294,7 +294,6 @@
                 onChange: function (vals) {
                     const inputTarget = document.querySelector('#demo1')
                     inputTarget.textContent = vals;
-                    document.querySelector('#input1').value = vals;
                     const getNaira = async () => {
                         const cpu        = inputTarget.textContent
                         const ram         = document.querySelector('#demo2').textContent
@@ -306,16 +305,25 @@
                 }
             });
 
+                //SET range with input changes::
+
+                document.querySelector('#input1').addEventListener('change', (e) => {
+                    const target = document.querySelector('.slider-container');
+                    let closest  = target.querySelector('.rs-selected');
+                    let pointer  = target.querySelector('.rs-pointer'); 
+                    closest.style.width = "100px !important";
+                    slider2.setValues(e.target.value);
+                })
+
             var slider3 = new rSlider({
                 target: '#slider3',
                 values: {min: 0, max: 64},
                 step:4,
                 range: false,
-                set: [5],
+                scale:true,
                 tooltip: false,
                 onChange: function (vals) {
                     const secondTarget = document.querySelector('#demo2');
-                    document.querySelector('#input2').value = vals;
                     secondTarget.textContent = vals
                     const getNaira = async () => {
                         const inputValue  = secondTarget.textContent
@@ -336,7 +344,6 @@
                 tooltip: false,
                 onChange: function (vals) {
                     const thirdTarget = document.querySelector('#demo3');
-                    document.querySelector('#input3').value = vals;
                     thirdTarget.textContent = vals
                     const getNaira = async () => {
                        const inputValue  = thirdTarget.textContent
@@ -376,14 +383,7 @@
 
 
 
-  //SET range with input changes::
-
-  document.querySelector('#input1').addEventListener('change', (e) => {
-    const target = document.querySelector('.slider-container');
-    let closest  = target.querySelector('.rs-selected');
-    let pointer  = target.querySelector('.rs-pointer');
-    slider2.setValues(e.target.value);
-  })
+  
    
 </script>
 <script type="text/javascript" src="js/jquery-3.3.1.slim.min.js"></script>
