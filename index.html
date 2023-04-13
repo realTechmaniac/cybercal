@@ -113,9 +113,11 @@
         .custom-fin{
             width: 80px;
             margin-bottom: 15px;
-            border-color:  grey;
-            border-width: 0.6px;
+            border-color:   #0c9ee8 !important;
+            border-width: 2px;
+            border-style: solid;
             text-align: center;
+            border-radius: 3px;
         }
 
     </style>
@@ -135,7 +137,7 @@
                             <p>CPU</p>
                             <p class="font-weight-bold">-</p>
                             <p class="font-weight-bold number-item" id="demo1"></p>
-                            <input type = "text" value = "" class="custom-fin" id = "input1" onChange = "setRange(this.value,'slider2')"/>
+                            <input type = "text" value = "" class="custom-fin" id = "input1" onchange="calculateCustom()"/>
                         </div>
                   </div>
                 </div>
@@ -155,7 +157,7 @@
                             <p>RAM</p>
                             <p class="font-weight-bold">-</p>
                             <p class="font-weight-bold number-item" id="demo2"></p>
-                            <input type = "text" value="" class="custom-fin" id = "input2" onChange = "setRange(this.value, 'slider3')"/>
+                            <input type = "text" value="" class="custom-fin" id = "input2" onchange="calculateCustom()"/>
                         </div>
                     </div>
                 </div>
@@ -167,14 +169,14 @@
                
             </div>
          
-            <div class="text-justify">
+            <div class="text-justify mb-5">
                 <div class="col-md-12 pt-3">
                     <div class="row mt-5">
                         <div class="number-box">
-                            <p> STORAGE(TB)</p> 
+                            <p> STORAGE(GB)</p> 
                             <p class="font-weight-bold">-</p>
                             <p class="font-weight-bold number-item" id="demo3"></p>
-                            <input type = "text" value=""  id = "input3"class="custom-fin" onChange = "setRange(this.value, 'slider4')"/>
+                            <input type = "text" value=""  id = "input3"class="custom-fin" onchange="calculateCustom()"/>
                         </div>
                     </div>
                 </div>
@@ -292,6 +294,7 @@
                 values:{min: 0, max: 20},
                 range: false,
                 step:2 ,
+                labels:true,
                 set: [0],
                 tooltip: false,
                 onChange: function (vals) {
@@ -309,8 +312,9 @@
             });
 
 
-   
 
+          
+1
                
             var slider3 = new rSlider({
                 target: '#slider3',
@@ -337,7 +341,7 @@
                 values:  {min: 0, max: 1000},
                 range: false,
                 step:250,
-                set: [5],
+                set: [0],
                 tooltip: false,
                 onChange: function (vals) {
                     const thirdTarget = document.querySelector('#demo3');
@@ -379,8 +383,25 @@
     })
 
 
+    const calculateCustom = async() => {
+        const cpu = document.getElementById('input1').value;
+        const ram = document.getElementById('input2').value;
+        const storage = document.getElementById('input3').value;
+        const exchangerate =  await fetchExchangeValue(1, 'NGN', 'USD');
+        const rate  = exchangerate ? exchangerate : 765;
+        console.log('my rate', rate);
+        const total       = (cpu * 3.75 * 1.2 * rate ) + (ram * 8.17 * 1.2 * rate) + (storage * 0.05 * 1.2 * rate)
+        const totalHolder = document.querySelector('#total');
+        const currentCurrency = document.getElementById('currencyInput').value;
+        if(currentCurrency  == 'NGN'){
+            totalHolder.value =  total.toFixed(2)
+        }else{
+            totalHolder.value = (total/rate).toFixed(2)
+        }
+    }
 
-  
+
+   
    
 </script>
 <script type="text/javascript" src="js/jquery-3.3.1.slim.min.js"></script>
