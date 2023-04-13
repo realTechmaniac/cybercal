@@ -135,7 +135,7 @@
                             <p>CPU</p>
                             <p class="font-weight-bold">-</p>
                             <p class="font-weight-bold number-item" id="demo1"></p>
-                            <input type = "text" value = "" class="custom-fin" id = "input1"/>
+                            <input type = "text" value = "" class="custom-fin" id = "input1" onChange = "setRange(this.value,'slider2')"/>
                         </div>
                   </div>
                 </div>
@@ -155,7 +155,7 @@
                             <p>RAM</p>
                             <p class="font-weight-bold">-</p>
                             <p class="font-weight-bold number-item" id="demo2"></p>
-                            <input type = "text" value="" class="custom-fin" id = "input2"/>
+                            <input type = "text" value="" class="custom-fin" id = "input2" onChange = "setRange(this.value, 'slider3')"/>
                         </div>
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                             <p> STORAGE(TB)</p> 
                             <p class="font-weight-bold">-</p>
                             <p class="font-weight-bold number-item" id="demo3"></p>
-                            <input type = "text" value=""  id = "input3"class="custom-fin"/>
+                            <input type = "text" value=""  id = "input3"class="custom-fin" onChange = "setRange(this.value, 'slider4')"/>
                         </div>
                     </div>
                 </div>
@@ -275,7 +275,10 @@
         }               
     }
 
-
+    function setRange(value, slider_name){
+       document.getElementById(`${slider_name}`).value(value)
+       
+    }
 
     (function () {
         'use strict';
@@ -289,7 +292,7 @@
                 values:{min: 0, max: 20},
                 range: false,
                 step:2 ,
-                set: [2],
+                set: [0],
                 tooltip: false,
                 onChange: function (vals) {
                     const inputTarget = document.querySelector('#demo1')
@@ -305,16 +308,10 @@
                 }
             });
 
-                //SET range with input changes::
 
-                document.querySelector('#input1').addEventListener('change', (e) => {
-                    const target = document.querySelector('.slider-container');
-                    let closest  = target.querySelector('.rs-selected');
-                    let pointer  = target.querySelector('.rs-pointer'); 
-                    closest.style.width = "100px !important";
-                    slider2.setValues(e.target.value);
-                })
+   
 
+               
             var slider3 = new rSlider({
                 target: '#slider3',
                 values: {min: 0, max: 64},
