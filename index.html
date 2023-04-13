@@ -300,6 +300,7 @@
                 onChange: function (vals) {
                     const inputTarget = document.querySelector('#demo1')
                     inputTarget.textContent = vals;
+                    document.getElementById('input1').value = vals;
                     const getNaira = async () => {
                         const cpu        = inputTarget.textContent
                         const ram         = document.querySelector('#demo2').textContent
@@ -325,6 +326,7 @@
                 tooltip: false,
                 onChange: function (vals) {
                     const secondTarget = document.querySelector('#demo2');
+                    document.getElementById('input2').value = vals;
                     secondTarget.textContent = vals
                     const getNaira = async () => {
                         const inputValue  = secondTarget.textContent
@@ -345,6 +347,7 @@
                 tooltip: false,
                 onChange: function (vals) {
                     const thirdTarget = document.querySelector('#demo3');
+                    document.getElementById('input3').value = vals;
                     thirdTarget.textContent = vals
                     const getNaira = async () => {
                        const inputValue  = thirdTarget.textContent
